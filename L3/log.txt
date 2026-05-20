@@ -1,54 +1,19 @@
-Add helper method to rond to 2 decimal from given number string and then anothe helper convert back to 2 decimal aftr convertion of unit
-private float roundToTwoDecimals(String strNum) {
-        float num = Float.parseFloat(strNum);
-        int n = Math.round(num * 100.0f);
-        return n / 100.0f;
-    }
+Simple Documentation Log (Assignment 3)
 
-private float backToTwoDecimals(float num) {
-    int n = Math.round(num * 100.0f);
-    return n / 100.0f;
-}
+File: conversion.java
 
-Before: convert manually each
-    private float convertCm2In (String cmAsStr)
-        {  // Convert centimeters to inches
-            float num1, num2; // temporary variables
-            int n; // temporary variable
-            // Round to 2 digits past decimal
-            num1 = (Float.valueOf (cmAsStr).floatValue ());
-            n    = Math.round(num1 * (float)100.0);
-            num1 = (float) (n / (float)100.0);
-            // Convert
-            num2 = (float) (num1 * 0.3937);
-            // Back to 2 digits
-            n    = Math.round(num2 * (float)100.0);
-            num2 = (float) (n / (float)100.0);
-            return(num2);
-        }
+Refactoring / duplication removal
+- Added shared numeric helpers: parseAndRoundInput(), roundToAccuracy(), fmt(), and convert(input, formula) to centralize parsing, rounding, formatting, and the “conversion pipeline.”
+- Simplified each convertX2Y() method to be a thin wrapper that only defines the conversion formula (most duplicated code removed).
 
-After: using helper function to reduce redundant code
-    private float convertCm2In (String cmAsStr)
-    {  // Convert centimeters to inches
-        float num1, num2; // temporary variables
-        // Round to 2 digits past decimal
-        num1 = roundToTwoDecimals(cmAsStr);
-        // Convert
-        num2 = (float) (num1 * 0.3937);
-        // Back to 2 digits
-        num2 = backToTwoDecimals(num2);
-        return(num2);
-    }
+New functionality: time conversions
+- Added Hours -> Seconds (convertH2S) and Seconds -> Hours (convertS2H).
+- Updated menu + dispatch to support both directions (options 15 and 16).
 
-Added Hours to Second function converter
-private float convertH2s (String hAsStr)
-    {  // Convert hours to seconds
-        float num1, num2; // temporary variables
-        // Round to 2 digits past decimal
-        num1 = roundToTwoDecimals(hAsStr);
-        // Convert
-        num2 = (float) (num1 * 3600.0);
-        // Back to 2 digits
-        num2 = backToTwoDecimals(num2);
-        return(num2);
-    }
+New functionality: configurable decimal accuracy (0–4)
+- Added an accuracy field (0–4) that controls rounding and output formatting consistently across all conversions.
+- Updated the UI to include a menu option “0) Set decimal accuracy (0–4)” and display the current accuracy in the menu header.
+
+Usability / readability improvements
+- Updated output messages to include units (e.g., “1.5000 h = 5400.0000 s”) so results are easier to interpret.
+- Corrected large-distance menu labels to match the implemented conversions (miles <-> kilometers).
