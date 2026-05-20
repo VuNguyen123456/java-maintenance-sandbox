@@ -1,0 +1,5 @@
+We read through the provided file. Identify old UI that's not needed and identify logic code to kept.
+We decided to make a simple Command Line Interface to do unit conversion
+We decided to so with Scanner or I/O and Print into commandline to guide user to enter input.
+We implemented the code and tested it, with normal and edge cases
+We then revisit to check for consistent format and comments  
