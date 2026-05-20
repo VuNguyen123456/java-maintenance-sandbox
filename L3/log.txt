@@ -1,0 +1,54 @@
+Add helper method to rond to 2 decimal from given number string and then anothe helper convert back to 2 decimal aftr convertion of unit
+private float roundToTwoDecimals(String strNum) {
+        float num = Float.parseFloat(strNum);
+        int n = Math.round(num * 100.0f);
+        return n / 100.0f;
+    }
+
+private float backToTwoDecimals(float num) {
+    int n = Math.round(num * 100.0f);
+    return n / 100.0f;
+}
+
+Before: convert manually each
+    private float convertCm2In (String cmAsStr)
+        {  // Convert centimeters to inches
+            float num1, num2; // temporary variables
+            int n; // temporary variable
+            // Round to 2 digits past decimal
+            num1 = (Float.valueOf (cmAsStr).floatValue ());
+            n    = Math.round(num1 * (float)100.0);
+            num1 = (float) (n / (float)100.0);
+            // Convert
+            num2 = (float) (num1 * 0.3937);
+            // Back to 2 digits
+            n    = Math.round(num2 * (float)100.0);
+            num2 = (float) (n / (float)100.0);
+            return(num2);
+        }
+
+After: using helper function to reduce redundant code
+    private float convertCm2In (String cmAsStr)
+    {  // Convert centimeters to inches
+        float num1, num2; // temporary variables
+        // Round to 2 digits past decimal
+        num1 = roundToTwoDecimals(cmAsStr);
+        // Convert
+        num2 = (float) (num1 * 0.3937);
+        // Back to 2 digits
+        num2 = backToTwoDecimals(num2);
+        return(num2);
+    }
+
+Added Hours to Second function converter
+private float convertH2s (String hAsStr)
+    {  // Convert hours to seconds
+        float num1, num2; // temporary variables
+        // Round to 2 digits past decimal
+        num1 = roundToTwoDecimals(hAsStr);
+        // Convert
+        num2 = (float) (num1 * 3600.0);
+        // Back to 2 digits
+        num2 = backToTwoDecimals(num2);
+        return(num2);
+    }
