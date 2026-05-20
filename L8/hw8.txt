@@ -1,0 +1,57 @@
+A. Screen shot attached
+
+B. [1, 3, 6, 7, 9] is not a test path because 6 cannot get to 7 because no edges are there
+
+C. [2, 4, 8, 4, 8, 4, 8, 10] is a test path because it start with a start node and end in a end node
+
+D. [2, 3, 5, 9] is a test path because it start with a start node and end in a end node
+
+E. length of shortest test path is 3 (3 edge to reach from start node to end node)
+Examples: [1,3,5,9], [2,3,6,9], [2,4,8,10]
+
+
+F. test requirements for edge-pair coverage:
+(1,3,7)
+(1,3,5)
+(1,3,6)
+(2,3,7)
+(2,3,5)
+(2,3,6)
+(3,7,9)
+(3,5,9)
+(3,6,9)
+(2,4,8)
+(4,8,4)
+(4,8,10)
+(8,4,8)
+
+G. test paths that tour all of the edge-pairs.
+[1,3,7,9]
+[1,3,5,9]
+[1,3,6,9]
+[2,3,7,9]
+[2,3,5,9]
+[2,3,6,9]
+[2,4,8,4,8,10]
+
+H. Give the test requirements for prime path coverage.
+Simple paths:
+[1],[2],[3],[4],[5],[6],[7],[8],[9],[10],
+[1,3],[2,3],[2,4],[3,5],[3,6],[3,7],[4,8],[5,9],[6,9],[7,9],[8,4],[8,10],
+[1,3,7],[1,3,5],[1,3,6],[2,3,7],[2,3,5],[2,3,6],[3,7,9],[3,5,9],[3,6,9],[2,4,8],[4,8,4],[8,4,8],[4,8,10],
+[1,3,7,9],[1,3,5,9],[1,3,6,9],[2,3,7,9],[2,3,5,9],[2,3,6,9],[2,4,8,10]
+
+Prime paths:
+[4,8,4],[8,4,8],
+[1,3,7,9],[1,3,5,9],[1,3,6,9],[2,3,7,9],[2,3,5,9],[2,3,6,9],[2,4,8,10]
+
+
+I. Give test paths that tour all of the prime paths.
+[1,3,7,9]
+[1,3,5,9]
+[1,3,6,9]
+[2,3,7,9]
+[2,3,5,9]
+[2,3,6,9]
+[2,4,8,10]
+[2,4,8,4,8,10]
