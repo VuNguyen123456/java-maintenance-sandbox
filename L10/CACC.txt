@@ -1,0 +1,128 @@
+1. Write the predicate (only the predicate) to represent the requirement: 
+“If rain is predicted, carry an umbrella. 
+Also, take a jacket if the temperature is below 70 Fahrenheit or below 21 Celsius.” 
+(rain -> umbrella) & ((temp<70F | temp<21C) -> jacket)
+
+2. Answer the following six questions for the predicate: 
+p = (a ∨ b) ∧ (a ∨ c) ∧ d 
+Here is the predicate in the syntax for the book’s 
+logic coverage tool: p = (a | b) & (a | c) & d
+
+(1)List the clauses from the predicate p.
+The clauses are: a, b, c, d
+
+(2)Write the complete truth table for all clauses. Label your rows starting from 1. 
+Use the format in the example underneath the definition of 
+Combinatorial Coverage 
+in Section 8.1. That is, row 1 should be all clauses true. 
+You should include columns for the conditions under which each 
+clause determines the predicate (pa, pb, pc, and pd), 
+and also a column for the value of the predicate itself (p).
+
+p = (a | b) & (a | c) & d
+
+Row  | a | b | c | d | pa| pb| pc| pd| p |
+ 1   | T | T | T | T | F | F | F | T | T |
+ 2   | T | T | T | F | F | F | F | F | F |
+ 3   | T | T | F | T | T | F | F | T | T |
+ 4   | T | T | F | F | F | F | F | T | F |                        
+ 5   | T | F | T | T | T | F | F | T | T |                        
+ 6   | T | F | T | F | F | F | F | T | F |                        
+ 7   | T | F | F | T | T | F | F | T | T |                        
+ 8   | T | F | F | F | F | F | F | T | F |                        
+ 9   | F | T | T | T | T | T | T | T | T |                        
+ 10  | F | T | T | F | F | F | F | T | F |                        
+ 11  | F | T | F | T | T | F | T | F | F |                        
+ 12  | F | T | F | F | F | F | F | F | F |                        
+ 13  | F | F | T | T | T | T | F | F | F |                        
+ 14  | F | F | T | F | F | F | F | F | F |                       
+ 15  | F | F | F | T | T | F | F | F | F |
+ 16  | F | F | F | F | F | F | F | F | F |                          
+
+(3)Compute (and simplify) the conditions under which each clause determines predicate p.
+(a) Make clause "a" active 
+P = P(a=true) XOR P(a=false)
+  = ((T | b) & (T | c) & d) XOR ((F | b) & (F | c) & d)
+  = (T & T & d) XOR (b & c & d)
+  = (d) XOR (b & c & d)
+  = d and !(b & c)
+
+(b) Make clause "b" active 
+P = P(b=true) XOR P(b=false)
+  = ((a | T) & (a | c) & d) XOR ((a | F) & (a | c) & d)
+  = (T & (a | c) & d) XOR (a & (a | c) & d)
+  = ((a | c) & d) XOR (a & (a | c) & d)
+  = ((a | c) & d) and !a
+
+(c) Make clause "c" active 
+P = P(c=true) XOR P(c=false)
+  = ((a | b) & (a | T) & d) XOR ((a | b) & (a | F) & d)
+  = ((a | b) & T & d) XOR ((a | b) & a & d)
+  = ((a | b) & d) XOR ((a | b) & a & d)
+  = ((a | b) & d) and !a
+
+(d) Make clause "d" active 
+P = P(d=true) XOR P(d=false)
+  = ((a | b) & (a | c) & T) XOR ((a | b) & (a | c) & F)
+  = ((a | b) & (a | c)) XOR F
+  = ((a | b) & (a | c))
+
+(4)List all pairs of rows from your table that satisfy 
+Correlated Active Clause Coverage (CACC) with respect to each clause. 
+You should be able to read this directly from your answer to part c.
+
+pa: a diff, p diff => others whatever
+(1,10)
+(1,11)
+(1,12)
+(1,13)
+(1,14)
+(1,15)
+(1,16)
+
+(2,9)
+
+(3,10)
+(3,11)
+(3,12)
+(3,13)
+(3,14)
+(3,15)
+(3,16)
+
+(4,9)
+
+(5,10)
+(5,11)
+(5,12)
+(5,13)
+(5,14)
+(5,15)
+(5,16)
+
+(6,9)
+
+(7,10)
+(7,11)
+(7,12)
+(7,13)
+(7,14)
+(7,15)
+(7,16)
+
+(8,9)
+
+pb: b diff, p diff => others whatever
+(1,6)
+(1,8)
+(1,13)
+(1,14)
+(1,15)
+(1,16)
+
+(2,9)
+(2,)
+
+
+pc: c diff, p diff => others whatever
+pd: d diff, p diff => others whatever
