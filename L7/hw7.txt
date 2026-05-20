@@ -1,0 +1,51 @@
+Part 1:
+1. Identify all inputs:
+    - Fahrenheit:
+    - Celsius:
+    = Inches:
+    - Centimerters:
+    - Feet:
+    - Meters:
+    - Miles:
+    - Kilometers:
+    - Gallons:
+    - Liters:
+    - Ounces:
+    - Grams:
+    - Pounds:
+    - Kilograms:
+    - Button Click (Convert or Clear)
+
+2. Identify Characteristic
+C1: Input value relation to 0
+C2: Direction type
+C3: Button click
+C4: Measurement type
+
+3. Partition characteristic into blocks
+C1: < 0         | = 0       | > 0       | No relation (empty)
+C2: Forward (First unit → second unit (displayed in UI))     | Reverse Second unit → first unit
+C3: Convert     | Reset
+C4: Temperature | Distance  | Volume    | Weight
+
+5. Define values for the blocks
+C1: -10 | 0 | 10 | "test"
+C2: Fahrenheit -> Celsius | Celsius -> Fahrenheit
+C3: User clicks "Convert" button | User clicks "Reset" button
+C4: {Fahrenheit, Celsius}  | {Miles, Kilometers} | {Gallons, Liters} | {Pounds, Kilograms}
+
+6. BCC:
+Need: 1 + (3 + 1 + 1 + 3) = 9 test at least
+Base test: (-10, Fahrenheit -> Celsius, User clicks "Convert" button, {Fahrenheit, Celsius})
+Test cases: 
+(0, Fahrenheit -> Celsius, User clicks "Convert" button, {Fahrenheit, Celsius})
+(10, Fahrenheit -> Celsius, User clicks "Convert" button, {Fahrenheit, Celsius})
+("test", Fahrenheit -> Celsius, User clicks "Convert" button, {Fahrenheit, Celsius})
+
+(-10, Celsius -> Fahrenheit, User clicks "Convert" button, {Fahrenheit, Celsius})
+
+(-10, Fahrenheit -> Celsius, User clicks "Reset" button, {Fahrenheit, Celsius})
+
+(-10, Fahrenheit -> Celsius, User clicks "Convert" button, {Miles, Kilometers})
+(-10, Fahrenheit -> Celsius, User clicks "Convert" button, {Gallons, Liters})
+(-10, Fahrenheit -> Celsius, User clicks "Convert" button, {Pounds, Kilograms})

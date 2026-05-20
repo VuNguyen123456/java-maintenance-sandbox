@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Converter</title>
+</head>
+<body>
+
+<h2>Temperature / Unit Converter</h2>
+
+<!-- INPUT -->
+<input id="input" type="text" placeholder="Enter value" />
+
+<br><br>
+
+<!-- DIRECTION -->
+<select id="direction">
+  <option>Fahrenheit -> Celsius</option>
+  option>Celsius -> Fahrenheit</option>
+</select>
+
+<br><br>
+
+<!-- ACTION BUTTONS -->
+<button id="convert">Convert</button>
+<button id="reset">Reset</button>
+
+<br><br>
+
+<!-- CATEGORY -->
+<select id="category">
+  <option>{Fahrenheit, Celsius}</option>
+  <option>{Miles, Kilometers}</option>
+  <option>{Gallons, Liters}</option>
+  <option>{Pounds, Kilograms}</option>
+</select>
+
+<br><br>
+
+<!-- RESULT -->
+<div id="result"></div>
+
+<script>
+  // Convert button
+  document.getElementById("convert").onclick = function () {
+    let val = document.getElementById("input").value;
+    let direction = document.getElementById("direction").value;
+
+    document.getElementById("result").innerText =
+      "Result: " + val + " (" + direction + ")";
+  };
+
+  // Reset button
+  document.getElementById("reset").onclick = function () {
+    document.getElementById("input").value = "";
+    document.getElementById("result").innerText = "";
+  };
+</script>
+
+</body>
+</html>
