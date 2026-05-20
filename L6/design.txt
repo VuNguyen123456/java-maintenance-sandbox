@@ -1,0 +1,68 @@
+1) Our solution is to use a global lock to hold all of the 
+intersection states. The thread for each vehicle checks to see if 
+the section is free before it enters the intersection. If the 
+section is not free we put the thread to sleep based on the 
+condition variable, it is then woken up when the section is free 
+to grab and enter. For a left turn we made the thread/vehicle take 
+both the sections it needed before it enters the intersection, this 
+ensures that we can't have a deadlock.
+
+2) We used a single global mutex lock to protect access to all shared data structures 
+(occupied[], cars_approaching[], num_remaining), which handle the road itself for mutual exclusion. 
+The lock ensures mutual exclusion when reading or updating these variables.
+
+3) We used 4 separate condition variables. The first 3 were used 
+for the different sections in the intersection like connecting 
+route A to B (AB) and route B to C (BC) and then route C to A 
+(CA). The last condition variable we used to wait until all the 
+vehicles have been through the intersection before we finish and 
+end the program.
+
+4) We used a simple counter to keep track of how many cars are
+approaching the intersection but are waiting to enter it. Each
+thread or car increments the counter before it calls approach()
+and decrements it inside the turn_right() and turn_left() functions
+after the vehicle has finished crossing. We moved the decrement
+inside the turn functions to make sure there is no gap between
+waking up waiting trucks and updating the counter. When a truck
+wants to enter the intersection it uses the counter as a reference,
+if the counter is more than 0 it means there is a car approaching
+which then puts the truck to sleep based on the condition variable
+until a car signals the truck that the counter for the cars has
+dropped to 0. Priority is per route only so a truck from Route A 
+is not delayed by cars from Route B even if they share sections.
+
+5) Some rules we implemented are that a vehicle checks to see if
+the sections it needs are free after it acquires the lock, if the
+section it needs is not free we put the vehicle thread to sleep.
+When coming from a lane and turning right the thread only needs 1
+section to be free. For a left turn the thread needs both sections
+free at the same time. For trucks specifically the waiting condition
+also checks if the section is currently occupied in addition to
+checking the cars counter. When a thread is finished and leaves the
+intersection it sets the section to free and then sends a broadcast
+on the CV so that it can wake up the sleeping/waiting vehicles so
+they can recheck the section they need. Since cars have a higher
+priority the trucks also need to wait for the approaching cars
+count to reach 0 before they can check the section is free to grab.
+
+Some case to consider:
+
+Admit:
+    - Car right turn: section must be free (occupied[sec] == 0)
+    - Car left turn: both sections must be free simultaneously 
+    (occupied[sec1] == 0 && occupied[sec2] == 0)
+    - Truck right turn: no cars approaching on same route AND section free 
+    (cars_approaching[route] == 0 && occupied[sec] == 0)
+    - Truck left turn: no cars approaching on same route AND both sections free 
+    (cars_approaching[route] == 0 && occupied[sec1] == 0 && occupied[sec2] == 0)
+
+Suspend:
+Any of the above conditions not met, vehicle calls cv_wait on relevant section CV
+
+Resume:
+    - Vehicle that did a left turn leaving section broadcasts on all 3 CVs 
+    to ensure no vehicle misses a state change
+    - Vehicle that did a right turn leaving section broadcasts on 
+    current section and the section before it CVs to ensure no vehicle 
+    that might want to use that section misses a state change (current route or previous route left turner)
