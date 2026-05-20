@@ -1,0 +1,4 @@
+Description:
+Command line unit converter. You first enter the choice 1 - 14 to get what conversion you want
+The you enter a floating point number to convert from that unit to the other one.
+You can also quit and the Program doesn't accept invalid input and will ask you to redo input if needed
