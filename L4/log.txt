@@ -1,0 +1,19 @@
+Simple Documentation Log (Assignment 3)
+
+File: conversion.java
+
+Refactoring / duplication removal
+- Added shared numeric helpers: parseAndRoundInput(), roundToAccuracy(), fmt(), and convert(input, formula) to centralize parsing, rounding, formatting, and the “conversion pipeline.”
+- Simplified each convertX2Y() method to be a thin wrapper that only defines the conversion formula (most duplicated code removed).
+
+New functionality: time conversions
+- Added Hours -> Seconds (convertH2S) and Seconds -> Hours (convertS2H).
+- Updated menu + dispatch to support both directions (options 15 and 16).
+
+New functionality: configurable decimal accuracy (0–4)
+- Added an accuracy field (0–4) that controls rounding and output formatting consistently across all conversions.
+- Updated the UI to include a menu option “0) Set decimal accuracy (0–4)” and display the current accuracy in the menu header.
+
+Usability / readability improvements
+- Updated output messages to include units (e.g., “1.5000 h = 5400.0000 s”) so results are easier to interpret.
+- Corrected large-distance menu labels to match the implemented conversions (miles <-> kilometers).
