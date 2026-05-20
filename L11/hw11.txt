@@ -1,0 +1,34 @@
+1. 
+New variable is given in the code (regulator)
+Original test doesn't check for this new condition in the new code:
+if (override && regulator)
+
+So this part in the old code is changed but the test didn't reflect that:
+
+Old:
+int timeNeeded = Math.abs(dTemp - curTemp); // abs() added May 2020
+if (override)
+    timeNeeded = Math.abs(overTemp - curTemp); // abs() added May 2020
+
+New:
+if (override && regulator)
+   timeNeeded = (curTemp - overTemp)/2;
+else if (override)
+   timeNeeded = curTemp - overTemp;
+
+=> Update test so that regulator variable is being controled acordingly
+
+2. CACC: Each clause must independently determine the value of the predicate
+Show ovverride determines P:
+P = overide && regulator
+regulator = T
+So: 
+(override = T) && T => P = T
+(override = F) && T => P = F
+=> determine P
+
+override = T
+So: 
+(regulator = T) && T => P = T
+(regulator = F) && T => P = F
+=> determine P
